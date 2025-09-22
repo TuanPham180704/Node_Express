@@ -4,9 +4,9 @@ const pool = require("../db");
 
 router.post("/", async (req, res) => {
   try {
-    const { username, password, email, full_name } = req.params;
+    const { username, password, email, full_name } = req.body;
     const result = await pool.query(
-      "INSERT INTO auth.users (username,password,email,full_name) VALUES ($1,$2,$3,4$) RETURNING *",
+      "INSERT INTO auth.users (username,password,email,full_name) VALUES ($1,$2,$3,$4) RETURNING *",
       [username, password, email, full_name]
     );
     res.json(result.rows[0]);
@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM auth.user ORDER BY id ASC");
+    const result = await pool.query("SELECT * FROM auth.users");
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM auth.user WHERE id = $1", [
+    const result = await pool.query("SELECT * FROM auth.users WHERE id = $1", [
       req.params.id,
     ]);
     if (result.rows.length === 0) {
@@ -40,7 +40,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const { username, password, email, full_name } = req.params;
+    const { username, password, email, full_name } = req.body;
     const result = await pool.query(
       "UPDATE auth.users SET username=$1, password=$2, email=$3, full_name=$4, updated_at=NOW() WHERE id=$5 RETURNING *",
       [username, password, email, full_name, req.params.id]
