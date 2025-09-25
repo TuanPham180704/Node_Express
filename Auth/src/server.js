@@ -1,12 +1,21 @@
-require("dotenv").config()
-const express = require('express')
-const app = express()
-const PORT = process.env.PORT || 3000
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
-app.get("/",(req,res)=>{
-    res.send("Hello Wolrd !")
-})
+const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin");
 
-app.listen(PORT, ()=>{
-    console.log(`🚀 Server running  on http://localhost:${PORT}`);
-    })
+const app = express();
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () =>
+  console.log(`Server running on port http://localhost:${PORT}`)
+);
