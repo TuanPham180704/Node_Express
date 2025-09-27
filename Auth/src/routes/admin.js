@@ -8,6 +8,7 @@ const {
 router.get(
   "/dashboard",
   authenticateToken,
+  
   authorizeRole("admin"),
   (req, res) => {
     res.json({ message: "Welcome Admin!" });

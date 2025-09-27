@@ -7,6 +7,9 @@ const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("Hello NodeJs");
+});
 
 app.use(bodyParser.json());
 app.use(cookieParser());
