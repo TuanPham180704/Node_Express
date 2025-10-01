@@ -1,0 +1,11 @@
+Xin chào, đây là file TXT mẫu!
+Nội dung được tạo ngẫu nhiên:
+
+- Họ tên: Nguyễn Văn A
+- Tuổi: 21
+- Sở thích: Lập trình, bóng đá, nghe nhạc
+
+Dòng số ngẫu nhiên: 48291
+Dòng ký tự ngẫu nhiên: XKD9-PLM2-ZQW7
+
+Kết thúc file.
