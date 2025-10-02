@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat nâng cao</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      #messages {
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: 200px;
+        overflow-y: scroll;
+      }
+      .mine {
+        text-align: right;
+        color: blue;
+      }
+      .other {
+        text-align: left;
+        color: green;
+      }
+      .system {
+        text-align: center;
+        color: gray;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Realtime Chat 💬</h2>
+    <div id="messages"></div>
+    <input id="username" placeholder="Nhập tên..." />
+    <button onclick="joinChat()">Join</button>
+    <br /><br />
+    <input id="msgInput" placeholder="Nhập tin nhắn..." />
+    <button onclick="sendMessage()">Gửi</button>
+
+    <script>
+      let socket;
+      let username;
+
+      function joinChat() {
+        username = document.getElementById("username").value;
+        if (!username) return alert("Hãy nhập tên!");
+        socket = new WebSocket("ws://localhost:8080");
+
+        socket.onopen = () => {
+          socket.send(JSON.stringify({ type: "join", username }));
+        };
+
+        socket.onmessage = (event) => {
+          const box = document.getElementById("messages");
+          let text = event.data;
+
+          let cssClass = "system";
+          if (text.includes(username + ":")) {
+            cssClass = "mine";
+          } else if (text.includes(":")) {
+            cssClass = "other";
+          }
+
+          box.innerHTML += `<p class="${cssClass}">${text}</p>`;
+          box.scrollTop = box.scrollHeight; // tự động scroll xuống cuối
+        };
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("msgInput");
+        if (socket && input.value.trim() !== "") {
+          socket.send(JSON.stringify({ type: "chat", message: input.value }));
+          input.value = "";
+        }
+      }
+    </script>
+  </body>
+</html>
