@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE Basic Example</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 100px;
+        background: #f5f6fa;
+      }
+      h1 {
+        color: #273c75;
+      }
+      #clock {
+        font-size: 2rem;
+        color: #44bd32;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🕒 Giờ hệ thống realtime (SSE)</h1>
+    <div id="clock">Đang kết nối...</div>
+
+    <script>
+      // Tạo kết nối SSE đến endpoint /events
+      const source = new EventSource("/events");
+
+      // Khi server gửi dữ liệu về
+      source.onmessage = (event) => {
+        document.getElementById("clock").textContent = event.data;
+      };
+
+      // Khi có lỗi (vd: server tắt)
+      source.onerror = (err) => {
+        document.getElementById("clock").textContent = "Mất kết nối...";
+        console.error("Lỗi SSE:", err);
+      };
+    </script>
+  </body>
+</html>
