@@ -6,7 +6,6 @@ const users = new Map();
 wss.on("connection", (ws) => {
   console.log("✅ Client connected");
 
-  // Khi client gửi message
   ws.on("message", (msg) => {
     const data = JSON.parse(msg.toString());
 
@@ -31,7 +30,6 @@ wss.on("connection", (ws) => {
   });
 });
 
-// Hàm gửi tin nhắn cho tất cả client
 function broadcast(msg) {
   wss.clients.forEach((client) => {
     if (client.readyState === 1) {
