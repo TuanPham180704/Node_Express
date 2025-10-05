@@ -1,0 +1,14 @@
+syntax = "proto3";
+package demo;
+
+service NewsService {
+  rpc GetNews (NewsRequest) returns (stream NewsItem);
+}
+
+message NewsRequest {
+  string topic = 1;
+}
+
+message NewsItem {
+  string title = 1;
+}
