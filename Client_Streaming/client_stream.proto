@@ -1,0 +1,15 @@
+syntax = "proto3";
+package demo;
+
+service UploadServie{
+    rpc UploadLogs (stream UploadRequest) returns (UploadSummary);
+}
+
+message UploadRequest{
+    string name = 1;
+}
+
+message UploadSummary{
+    int32 total = 1;
+}
+
