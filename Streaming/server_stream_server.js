@@ -7,7 +7,7 @@ const demo = grpcObj.demo;
 
 const server = new grpc.Server();
 
-// Handler cho server streaming: server sẽ write nhiều lần rồi end()
+
 function GetNews(call) {
   const topic = call.request.topic || "Chung";
   const items = [

@@ -23,10 +23,10 @@ function SayHello(call, callback) {
 
 server.addService(demo.HelloService.service, { SayHello });
 
-// 6. bind và start server trên port 50051
+
 server.bindAsync(
   "0.0.0.0:50051",
-  grpc.ServerCredentials.createInsecure(), // insecure: không dùng TLS trong ví dụ dev
+  grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err) {
       console.error("Bind error:", err);
