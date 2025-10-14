@@ -1,8 +1,14 @@
 const { Sequelize } = require("sequelize");
+require("dotenv").config();
+
+const password = String(process.env.DB_PASS || "")
+  .replace(/['"]/g, "")
+  .trim();
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
-  process.env.DB_PASS,
+  password,
   {
     host: process.env.DB_HOST,
     dialect: "postgres",
@@ -18,5 +24,6 @@ const sequelize = new Sequelize(
     console.error("❌ Database connection failed:", error);
   }
 })();
+
 
 module.exports = sequelize;
